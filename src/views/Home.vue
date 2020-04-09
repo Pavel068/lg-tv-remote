@@ -7,17 +7,20 @@
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
                                 <router-link class="nav-link" :to="{name: 'Control'}" :active-class="'active'">
-                                    <b-icon icon="controller"></b-icon> <span class="mobile_hide">Управление</span>
+                                    <b-icon icon="controller"></b-icon>
+                                    <span class="mobile_hide">Управление</span>
                                 </router-link>
                             </li>
                             <li class="nav-item">
                                 <router-link class="nav-link" :to="{name: 'TV'}" :active-class="'active'">
-                                    <b-icon icon="film"></b-icon> <span class="mobile_hide">Просмотр</span>
+                                    <b-icon icon="film"></b-icon>
+                                    <span class="mobile_hide">Просмотр</span>
                                 </router-link>
                             </li>
                             <li class="nav-item">
                                 <router-link class="nav-link" :to="{name: 'Settings'}" :active-class="'active'">
-                                    <b-icon icon="gear-fill"></b-icon> <span class="mobile_hide">Настройки</span>
+                                    <b-icon icon="gear-fill"></b-icon>
+                                    <span class="mobile_hide">Настройки</span>
                                 </router-link>
                             </li>
                         </ul>
@@ -40,9 +43,6 @@
 </template>
 
 <script>
-    import io from "socket.io-client";
-    const socket = io.connect(process.env.VUE_APP_NODE_HOST);
-
     export default {
         name: 'Home',
         data() {
@@ -61,9 +61,11 @@
             display: none;
         }
     }
+
     .container {
         margin-top: 15px;
     }
+
     .wrapper {
         min-height: 450px;
     }

@@ -16,7 +16,25 @@ io.on('connection', socket => {
         }
     });
 
-    socket.on('command', data => {
+    /*
+    * TV Class
+    * */
+    const TV = require('./lib/TV');
+    const TVInstance = new TV(socket, '192.168.1.113', 8080);
+
+    /*
+    * Request confirm code at connect
+    * */
+    (async () => {
+        try {
+            await TVInstance.requestTvAuth();
+            console.log('Requested');
+        } catch (e) {
+            console.error('Request code failed');
+        }
+    })();
+
+    socket.on('command', async data => {
         /*
         * Команды с фронтэнд-приложения
         * */
@@ -40,11 +58,13 @@ io.on('connection', socket => {
                 /*
                 * Подключение к устройству
                 * */
+                await TVInstance.confirmCodeSend(data.value);
                 break;
             case 'disconnect':
                 /*
                 * Отключение от устройства
                 * */
+                await TVInstance.disconnectTv();
                 break;
             default:
                 console.log('Undefined command', data);

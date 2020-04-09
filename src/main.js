@@ -6,6 +6,10 @@ import {BootstrapVue, IconsPlugin} from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
+import io from "socket.io-client";
+
+window.socket = io.connect(process.env.VUE_APP_NODE_HOST);
+
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
