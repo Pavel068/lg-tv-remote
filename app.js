@@ -1,20 +1,58 @@
-const express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+require('dotenv').config();
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const app = require('express')();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
-var app = express();
+server.listen(3000);
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+io.on('connection', socket => {
+    console.log('Client connected');
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+    socket.emit('message', {
+        type: 'info',
+        data: {
+            text: 'Connect complete!'
+        }
+    });
 
-module.exports = app;
+    socket.on('command', data => {
+        /*
+        * Команды с фронтэнд-приложения
+        * */
+        switch (data.type) {
+            case 'control':
+                /*
+                * Команды управления (каналы, громкость и т.п.)
+                * */
+                break;
+            case 'tv':
+                /*
+                * Команды показа ТВ
+                * */
+                break;
+            case 'settings':
+                /*
+                * Команды изменения настроек
+                * */
+                break;
+            case 'connect':
+                /*
+                * Подключение к устройству
+                * */
+                break;
+            case 'disconnect':
+                /*
+                * Отключение от устройства
+                * */
+                break;
+            default:
+                console.log('Undefined command', data);
+                break;
+        }
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected');
+    });
+});

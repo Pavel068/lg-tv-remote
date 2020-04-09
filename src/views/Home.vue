@@ -40,6 +40,9 @@
 </template>
 
 <script>
+    import io from "socket.io-client";
+    const socket = io.connect(process.env.VUE_APP_NODE_HOST);
+
     export default {
         name: 'Home',
         data() {
